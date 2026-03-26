@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hanami Trends — Anime Luxury Streetwear</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Zen+Kaku+Gothic+New:wght@300;400;700&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-dark: #7A5C10;
+    --black: #080808;
+    --black-2: #0f0f0f;
+    --black-3: #161616;
+    --black-4: #1e1e1e;
+    --white: #f5f0e8;
+    --white-muted: #a89f8c;
+    --border: rgba(201,168,76,0.18);
+    --border-bright: rgba(201,168,76,0.45);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.12s ease;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9990;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(8,8,8,0.94);
+    border-bottom-color: var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: var(--white-muted);
+    text-decoration: none;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--gold);
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    cursor: none;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated background lines */
+  .bg-lines {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .bg-line {
+    position: absolute;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.08), transparent);
+    animation: linePulse 6s ease-in-out infinite;
+  }
+  @keyframes linePulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 32px;
+    animation: heroReveal 1.4s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  @keyframes heroReveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-kanji {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.6em;
+    opacity: 0.6;
+    animation: heroReveal 1.4s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    animation: heroReveal 1.4s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .hero-tagline em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--white-muted);
+    text-transform: uppercase;
+    animation: heroReveal 1.4s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 16px;
+    animation: heroReveal 1.4s 0.45s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 38px;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 700;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--border-bright);
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 38px;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute; bottom: 40px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 8px;
+    animation: heroReveal 1.4s 0.6s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .scroll-indicator span {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--white-muted);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: 0.5; }
+    50% { transform: scaleY(1.2); opacity: 1; }
+  }
+
+  /* SECTION BASE */
+  section { padding: 120px 48px; }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    overflow: hidden;
+    background: var(--black-2);
+  }
+  .marquee-track {
+    display: flex; gap: 60px;
+    animation: marquee 18s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--white-muted);
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 24px;
+    flex-shrink: 0;
+  }
+  .marquee-dot {
+    width: 4px; height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+
+  /* SHOP */
+  #shop { background: var(--black-2); }
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .product-card {
+    position: relative;
+    aspect-ratio: 3/4;
+    background: var(--black-3);
+    overflow: hidden;
+    cursor: none;
+    group: true;
+  }
+  .product-card:hover .product-overlay { opacity: 1; }
+  .product-card:hover .product-img-bg { transform: scale(1.05); }
+  .product-img-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .product-overlay {
+    position: absolute; inset: 0;
+    background: rgba(8,8,8,0.75);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .product-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px 20px;
+    background: linear-gradient(to top, rgba(8,8,8,0.95) 60%, transparent);
+  }
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .product-price {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+  .product-tag {
+    position: absolute; top: 16px; left: 16px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--black);
+    background: var(--gold);
+    padding: 4px 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .btn-add {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    cursor: none;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+  .btn-add:hover { background: var(--gold-light); }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--black-3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 1px solid var(--border);
+    transform: translate(12px, 12px);
+  }
+  .about-text { display: flex; flex-direction: column; gap: 24px; }
+  .about-body {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--white-muted);
+    font-weight: 300;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--white-muted);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* FEATURED STRIP */
+  .featured-strip {
+    padding: 80px 48px;
+    background: var(--black-3);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .featured-strip blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 4vw, 48px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0 auto 20px;
+  }
+  .featured-strip cite {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--black-2); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 60px;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 32px; }
+  .contact-detail-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .contact-detail-val {
+    font-size: 15px;
+    color: var(--white-muted);
+    font-weight: 300;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--white-muted);
+    text-transform: uppercase;
+  }
+  .form-input, .form-textarea {
+    background: var(--black-3);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.3s;
+    resize: none;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(168,159,140,0.4); }
+  .form-textarea { height: 120px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 60px 48px 40px;
+  }
+  .footer-top {
+    display: flex; align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    gap: 40px;
+  }
+  .footer-brand { display: flex; flex-direction: column; gap: 16px; max-width: 280px; }
+  .footer-desc {
+    font-size: 13px;
+    color: var(--white-muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .footer-cols { display: flex; gap: 60px; }
+  .footer-col { display: flex; flex-direction: column; gap: 14px; }
+  .footer-col-title {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .footer-col a {
+    font-size: 13px;
+    color: var(--white-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+  .footer-col a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(168,159,140,0.4);
+    letter-spacing: 0.05em;
+  }
+  .footer-kanji {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: rgba(201,168,76,0.25);
+    letter-spacing: 0.3em;
+  }
+  .social-links { display: flex; gap: 20px; }
+  .social-links a {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--white-muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .social-links a:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* PRODUCT SVG ILLUSTRATIONS */
+  .product-hoodie, .product-tee, .product-jacket, .product-cap, .product-pants, .product-bag {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#home" class="nav-logo">
+    <svg width="32" height="38" viewBox="0 0 130 150">
+      <defs>
+        <linearGradient id="nG1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#F5E090"/>
+          <stop offset="55%" stop-color="#C9A84C"/>
+          <stop offset="100%" stop-color="#7A5C10"/>
+        </linearGradient>
+        <linearGradient id="nG2" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F0D070"/>
+          <stop offset="100%" stop-color="#8B6810"/>
+        </linearGradient>
+      </defs>
+      <polygon points="65,58 88,75 65,92 42,75" fill="#1c1400" stroke="url(#nG1)" stroke-width="1.3" stroke-linejoin="round"/>
+      <line x1="65" y1="58" x2="65" y2="92" stroke="#F0D070" stroke-width="0.6" opacity="0.3"/>
+      <line x1="42" y1="75" x2="88" y2="75" stroke="#F0D070" stroke-width="0.5" opacity="0.2"/>
+      <polygon points="42,75 14,58 28,77" fill="#110e00" stroke="url(#nG1)" stroke-width="1.2" stroke-linejoin="round"/>
+      <polygon points="42,75 10,86 28,95" fill="#0c0900" stroke="#B89030" stroke-width="1.1" stroke-linejoin="round"/>
+      <polygon points="88,75 116,56 102,76" fill="#110e00" stroke="url(#nG1)" stroke-width="1.2" stroke-linejoin="round"/>
+      <polygon points="88,75 120,88 102,97" fill="#0c0900" stroke="#B89030" stroke-width="1.1" stroke-linejoin="round"/>
+      <polygon points="65,58 72,40 58,40" fill="#1a1300" stroke="url(#nG2)" stroke-width="1.2" stroke-linejoin="round"/>
+      <polygon points="58,40 72,40 77,28 68,26" fill="#1f1700" stroke="url(#nG1)" stroke-width="1.1" stroke-linejoin="round"/>
+      <polygon points="77,28 89,22 82,30" fill="#0d0a00" stroke="#C9A84C" stroke-width="0.9" stroke-linejoin="round"/>
+      <circle cx="70" cy="32" r="2" fill="#F0D070"/>
+      <polygon points="65,92 58,112 72,112" fill="#1a1300" stroke="url(#nG2)" stroke-width="1.1" stroke-linejoin="round"/>
+      <polygon points="58,112 46,126 60,120" fill="#0f0c00" stroke="#B89030" stroke-width="0.9" stroke-linejoin="round"/>
+      <polygon points="72,112 84,126 70,120" fill="#0f0c00" stroke="#B89030" stroke-width="0.9" stroke-linejoin="round"/>
+      <g transform="translate(120,56)" opacity="0.9">
+        <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(0)"/>
+        <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(72)"/>
+        <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(144)"/>
+        <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(216)"/>
+        <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(288)"/>
+        <circle cx="0" cy="0" r="2.5" fill="#C9A84C"/>
+        <circle cx="0" cy="0" r="1.1" fill="#F0D070"/>
+      </g>
+    </svg>
+    <div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:#C9A84C;letter-spacing:0.1em;">HANAMI</div>
+      <div style="font-size:8px;letter-spacing:0.35em;color:rgba(201,168,76,0.5);text-transform:uppercase;margin-top:-2px;">TRENDS</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#shop">Collection</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta">Shop Now</button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="bg-lines" id="bgLines"></div>
+
+  <!-- Big crane watermark -->
+  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0.04;">
+    <svg width="700" height="700" viewBox="0 0 130 150">
+      <defs>
+        <linearGradient id="hG1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#F5E090"/>
+          <stop offset="100%" stop-color="#C9A84C"/>
+        </linearGradient>
+      </defs>
+      <polygon points="65,58 88,75 65,92 42,75" fill="#C9A84C" stroke="none"/>
+      <polygon points="42,75 14,58 28,77" fill="#C9A84C" stroke="none"/>
+      <polygon points="42,75 10,86 28,95" fill="#C9A84C" stroke="none" opacity="0.7"/>
+      <polygon points="88,75 116,56 102,76" fill="#C9A84C" stroke="none"/>
+      <polygon points="88,75 120,88 102,97" fill="#C9A84C" stroke="none" opacity="0.7"/>
+      <polygon points="65,58 72,40 58,40" fill="#C9A84C" stroke="none"/>
+      <polygon points="58,40 72,40 77,28 68,26" fill="#C9A84C" stroke="none"/>
+      <polygon points="77,28 89,22 82,30" fill="#C9A84C" stroke="none"/>
+      <polygon points="65,92 58,112 72,112" fill="#C9A84C" stroke="none"/>
+      <polygon points="58,112 46,126 60,120" fill="#C9A84C" stroke="none" opacity="0.7"/>
+      <polygon points="72,112 84,126 70,120" fill="#C9A84C" stroke="none" opacity="0.7"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-kanji">花見 &nbsp;·&nbsp; 趋势 &nbsp;·&nbsp; トレンド</div>
+    <h1 class="hero-tagline">
+      Wear the<br/><em>Blossom.</em>
+    </h1>
+    <p class="hero-sub">Anime-inspired luxury streetwear &nbsp;·&nbsp; Limited drops</p>
+    <div class="hero-btns">
+      <a href="#shop" class="btn-primary">Explore Collection</a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee">
+    <span class="marquee-item">Hanami Trends <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Anime Luxury <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Limited Drops <span class="marquee-dot"></span></span>
+    <span class="marquee-item">花見 <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Premium Streetwear <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Origami Crane <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Tokyo Aesthetic <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Hanami Trends <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Anime Luxury <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Limited Drops <span class="marquee-dot"></span></span>
+    <span class="marquee-item">花見 <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Premium Streetwear <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Origami Crane <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Tokyo Aesthetic <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section id="shop">
+  <div class="section-label">Collection</div>
+  <h2 class="section-title">The <em>Sakura</em> Drop</h2>
+  <p style="color:var(--white-muted);font-size:14px;max-width:500px;line-height:1.8;margin-top:8px;">Each piece carries the crane — hand-finished, anime-detailed, built to last beyond a season.</p>
+
+  <div class="shop-grid">
+
+    <!-- Product 1 -->
+    <div class="product-card fade-up">
+      <div class="product-img-bg">
+        <svg width="200" height="240" viewBox="0 0 200 240">
+          <defs>
+            <linearGradient id="pG1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#7A5C10" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+          <!-- Hoodie shape -->
+          <path d="M60,40 L40,70 L20,80 L30,100 L55,90 L55,200 L145,200 L145,90 L170,100 L180,80 L160,70 L140,40 Q120,30 100,32 Q80,30 60,40Z" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+          <!-- Hood -->
+          <path d="M60,40 Q80,20 100,18 Q120,20 140,40 Q120,35 100,35 Q80,35 60,40Z" fill="#222" stroke="#333" stroke-width="0.5"/>
+          <!-- Pocket -->
+          <rect x="65" y="150" width="70" height="35" rx="2" fill="none" stroke="#2a2a2a" stroke-width="0.8"/>
+          <!-- Crane logo on chest -->
+          <g transform="translate(100,110) scale(0.45)">
+            <polygon points="0,-30 23,-13 0,4 -23,-13" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="-23,-13 -46,-26 -34,-11" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linejoin="round"/>
+            <polygon points="23,-13 46,-28 34,-10" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linejoin="round"/>
+            <polygon points="0,-30 7,-48 -7,-48" fill="none" stroke="#C9A84C" stroke-width="1.6" stroke-linejoin="round"/>
+            <polygon points="-7,-48 -12,-56 -4,-52" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-linejoin="round"/>
+            <polygon points="0,4 -7,22 7,22" fill="none" stroke="#C9A84C" stroke-width="1.6" stroke-linejoin="round"/>
+          </g>
+          <text x="100" y="195" font-family="'Zen Kaku Gothic New',sans-serif" font-size="7" fill="rgba(201,168,76,0.4)" text-anchor="middle" letter-spacing="3">HANAMI</text>
+        </svg>
+      </div>
+      <div class="product-tag">New</div>
+      <div class="product-info">
+        <div class="product-name">Crane Oversized Hoodie</div>
+        <div class="product-price">€ 189</div>
+      </div>
+      <div class="product-overlay">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#f5f0e8;letter-spacing:0.05em;">Crane Oversized Hoodie</div>
+        <button class="btn-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card fade-up" style="transition-delay:0.1s">
+      <div class="product-img-bg">
+        <svg width="200" height="240" viewBox="0 0 200 240">
+          <!-- T-shirt shape -->
+          <path d="M65,45 L40,70 L25,65 L35,95 L58,85 L58,195 L142,195 L142,85 L165,95 L175,65 L160,70 L135,45 Q118,38 100,38 Q82,38 65,45Z" fill="#111" stroke="#222" stroke-width="1"/>
+          <!-- Crew neck -->
+          <path d="M65,45 Q82,38 100,38 Q118,38 135,45 Q120,52 100,52 Q80,52 65,45Z" fill="#1a1a1a"/>
+          <!-- Large back print style on front -->
+          <g transform="translate(100,120) scale(0.7)">
+            <polygon points="0,-38 30,-16 0,6 -30,-16" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+            <line x1="0" y1="-38" x2="0" y2="6" stroke="#F0D070" stroke-width="0.5" opacity="0.3"/>
+            <polygon points="-30,-16 -60,-30 -44,-12" fill="none" stroke="#C9A84C" stroke-width="1.3" stroke-linejoin="round"/>
+            <polygon points="30,-16 60,-32 44,-10" fill="none" stroke="#C9A84C" stroke-width="1.3" stroke-linejoin="round"/>
+            <polygon points="0,-38 8,-58 -8,-58" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-linejoin="round"/>
+            <polygon points="8,-58 18,-66 12,-52" fill="none" stroke="#C9A84C" stroke-width="1" stroke-linejoin="round"/>
+            <circle cx="9" cy="-64" r="1.5" fill="#F0D070"/>
+            <polygon points="0,6 -8,24 8,24" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-linejoin="round"/>
+            <polygon points="-8,24 -16,36 -6,30" fill="none" stroke="#C9A84C" stroke-width="1" stroke-linejoin="round"/>
+            <polygon points="8,24 16,36 6,30" fill="none" stroke="#C9A84C" stroke-width="1" stroke-linejoin="round"/>
+            <g transform="translate(60,-32)" opacity="0.8">
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="none" stroke="#C9A84C" stroke-width="0.8" transform="rotate(0)"/>
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="none" stroke="#C9A84C" stroke-width="0.8" transform="rotate(72)"/>
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="none" stroke="#C9A84C" stroke-width="0.8" transform="rotate(144)"/>
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="none" stroke="#C9A84C" stroke-width="0.8" transform="rotate(216)"/>
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="none" stroke="#C9A84C" stroke-width="0.8" transform="rotate(288)"/>
+              <circle cx="0" cy="0" r="2" fill="#C9A84C"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="product-tag" style="background:transparent;border:1px solid var(--gold);color:var(--gold);">Limited</div>
+      <div class="product-info">
+        <div class="product-name">Blossom Graphic Tee</div>
+        <div class="product-price">€ 89</div>
+      </div>
+      <div class="product-overlay">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#f5f0e8;letter-spacing:0.05em;">Blossom Graphic Tee</div>
+        <button class="btn-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card fade-up" style="transition-delay:0.2s">
+      <div class="product-img-bg">
+        <svg width="200" height="260" viewBox="0 0 200 260">
+          <!-- Bomber jacket shape -->
+          <path d="M55,50 L30,65 L18,90 L35,100 L35,210 L165,210 L165,100 L182,90 L170,65 L145,50 Q125,40 100,40 Q75,40 55,50Z" fill="#0d0d0d" stroke="#1e1e1e" stroke-width="1"/>
+          <!-- Collar -->
+          <path d="M55,50 Q75,42 100,40 Q125,42 145,50 L130,60 Q115,55 100,54 Q85,55 70,60Z" fill="#1a1400" stroke="#C9A84C" stroke-width="0.5" opacity="0.6"/>
+          <!-- Ribbed cuffs suggestion -->
+          <rect x="18" y="90" width="17" height="20" rx="1" fill="#111" stroke="#222" stroke-width="0.5"/>
+          <rect x="165" y="90" width="17" height="20" rx="1" fill="#111" stroke="#222" stroke-width="0.5"/>
+          <!-- Ribbed hem -->
+          <rect x="35" y="200" width="130" height="10" rx="1" fill="#111" stroke="#222" stroke-width="0.5"/>
+          <!-- Zipper line -->
+          <line x1="100" y1="55" x2="100" y2="210" stroke="#2a2a2a" stroke-width="1"/>
+          <!-- Chest patch crane -->
+          <rect x="58" y="95" width="48" height="42" rx="2" fill="#1a1400" stroke="#C9A84C" stroke-width="0.8" opacity="0.7"/>
+          <g transform="translate(82,116) scale(0.36)">
+            <polygon points="0,-38 30,-16 0,6 -30,-16" fill="#1c1400" stroke="#C9A84C" stroke-width="2.5" stroke-linejoin="round"/>
+            <polygon points="-30,-16 -58,-30 -42,-12" fill="#110e00" stroke="#C9A84C" stroke-width="2.2" stroke-linejoin="round"/>
+            <polygon points="30,-16 58,-30 42,-10" fill="#110e00" stroke="#C9A84C" stroke-width="2.2" stroke-linejoin="round"/>
+            <polygon points="0,-38 8,-58 -8,-58" fill="#1a1300" stroke="#F0D070" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="8,-58 18,-66 12,-52" fill="#0d0a00" stroke="#C9A84C" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="9" cy="-64" r="2.5" fill="#F0D070"/>
+            <polygon points="0,6 -8,24 8,24" fill="#1a1300" stroke="#F0D070" stroke-width="2" stroke-linejoin="round"/>
+          </g>
+          <text x="82" y="145" font-family="serif" font-size="6" fill="rgba(201,168,76,0.5)" text-anchor="middle" letter-spacing="2">花見</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Sakura Bomber Jacket</div>
+        <div class="product-price">€ 329</div>
+      </div>
+      <div class="product-overlay">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#f5f0e8;letter-spacing:0.05em;">Sakura Bomber Jacket</div>
+        <button class="btn-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card fade-up" style="transition-delay:0.3s">
+      <div class="product-img-bg">
+        <svg width="200" height="220" viewBox="0 0 200 220">
+          <!-- Cargo pants -->
+          <path d="M50,30 L50,130 L30,200 L75,200 L100,130 L125,200 L170,200 L150,130 L150,30Z" fill="#111" stroke="#1e1e1e" stroke-width="1"/>
+          <!-- Waistband -->
+          <rect x="50" y="22" width="100" height="14" rx="2" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.8"/>
+          <!-- Cargo pockets -->
+          <rect x="32" y="90" width="38" height="32" rx="2" fill="none" stroke="#2a2a2a" stroke-width="0.8"/>
+          <rect x="130" y="90" width="38" height="32" rx="2" fill="none" stroke="#2a2a2a" stroke-width="0.8"/>
+          <line x1="51" y1="90" x2="51" y2="122" stroke="#222" stroke-width="0.5"/>
+          <line x1="149" y1="90" x2="149" y2="122" stroke="#222" stroke-width="0.5"/>
+          <!-- Embroidery on left pocket -->
+          <g transform="translate(51,106) scale(0.22)">
+            <polygon points="0,-38 30,-16 0,6 -30,-16" fill="none" stroke="#C9A84C" stroke-width="3" stroke-linejoin="round"/>
+            <polygon points="-30,-16 -58,-30 -42,-12" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linejoin="round"/>
+            <polygon points="30,-16 58,-30 42,-10" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linejoin="round"/>
+            <polygon points="0,-38 8,-56 -8,-56" fill="none" stroke="#C9A84C" stroke-width="2.2" stroke-linejoin="round"/>
+          </g>
+        </svg>
+      </div>
+      <div class="product-tag">New</div>
+      <div class="product-info">
+        <div class="product-name">Origami Cargo Pants</div>
+        <div class="product-price">€ 219</div>
+      </div>
+      <div class="product-overlay">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#f5f0e8;letter-spacing:0.05em;">Origami Cargo Pants</div>
+        <button class="btn-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product-card fade-up" style="transition-delay:0.4s">
+      <div class="product-img-bg">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <!-- Cap shape -->
+          <ellipse cx="100" cy="120" rx="72" ry="22" fill="#0d0d0d" stroke="#1e1e1e" stroke-width="0.8"/>
+          <path d="M28,120 Q28,55 100,50 Q172,55 172,120Z" fill="#111" stroke="#1e1e1e" stroke-width="1"/>
+          <!-- Bill -->
+          <path d="M30,118 Q30,130 18,132 Q10,132 8,126 Q20,125 28,120Z" fill="#0a0a0a" stroke="#1e1e1e" stroke-width="0.8"/>
+          <!-- Seams -->
+          <path d="M100,52 Q100,60 100,120" stroke="#1e1e1e" stroke-width="0.8" fill="none"/>
+          <path d="M60,58 Q65,85 65,120" stroke="#1e1e1e" stroke-width="0.8" fill="none"/>
+          <path d="M140,58 Q135,85 135,120" stroke="#1e1e1e" stroke-width="0.8" fill="none"/>
+          <!-- Strap back -->
+          <rect x="85" y="118" width="30" height="8" rx="2" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.6"/>
+          <!-- Crane embroidery front -->
+          <g transform="translate(100,88) scale(0.35)">
+            <polygon points="0,-38 30,-16 0,6 -30,-16" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linejoin="round"/>
+            <polygon points="-30,-16 -55,-28 -40,-12" fill="none" stroke="#C9A84C" stroke-width="2.2" stroke-linejoin="round"/>
+            <polygon points="30,-16 55,-30 40,-10" fill="none" stroke="#C9A84C" stroke-width="2.2" stroke-linejoin="round"/>
+            <polygon points="0,-38 7,-54 -7,-54" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="7,-54 16,-62 10,-50" fill="none" stroke="#C9A84C" stroke-width="1.6" stroke-linejoin="round"/>
+            <circle cx="8" cy="-59" r="2.2" fill="#F0D070"/>
+            <polygon points="0,6 -7,22 7,22" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linejoin="round"/>
+            <g transform="translate(55,-30)" opacity="0.8">
+              <ellipse cx="0" cy="0" rx="3.5" ry="6" fill="none" stroke="#C9A84C" stroke-width="1.5" transform="rotate(0)"/>
+              <ellipse cx="0" cy="0" rx="3.5" ry="6" fill="none" stroke="#C9A84C" stroke-width="1.5" transform="rotate(72)"/>
+              <ellipse cx="0" cy="0" rx="3.5" ry="6" fill="none" stroke="#C9A84C" stroke-width="1.5" transform="rotate(144)"/>
+              <ellipse cx="0" cy="0" rx="3.5" ry="6" fill="none" stroke="#C9A84C" stroke-width="1.5" transform="rotate(216)"/>
+              <ellipse cx="0" cy="0" rx="3.5" ry="6" fill="none" stroke="#C9A84C" stroke-width="1.5" transform="rotate(288)"/>
+              <circle cx="0" cy="0" r="2" fill="#C9A84C"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Hanami Dad Cap</div>
+        <div class="product-price">€ 69</div>
+      </div>
+      <div class="product-overlay">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#f5f0e8;letter-spacing:0.05em;">Hanami Dad Cap</div>
+        <button class="btn-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="product-card fade-up" style="transition-delay:0.5s">
+      <div class="product-img-bg">
+        <svg width="200" height="240" viewBox="0 0 200 240">
+          <!-- Tote bag -->
+          <path d="M45,70 L35,210 L165,210 L155,70Z" fill="#111" stroke="#1e1e1e" stroke-width="1"/>
+          <!-- Handles -->
+          <path d="M72,70 Q72,30 95,28 Q118,30 128,70" fill="none" stroke="#1e1e1e" stroke-width="6" stroke-linecap="round"/>
+          <path d="M72,70 Q72,30 95,28 Q118,30 128,70" fill="none" stroke="#C9A84C" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+          <!-- Top seam -->
+          <line x1="45" y1="70" x2="155" y2="70" stroke="#1e1e1e" stroke-width="2"/>
+          <!-- Side seams -->
+          <line x1="45" y1="70" x2="35" y2="210" stroke="#1a1a1a" stroke-width="1"/>
+          <line x1="155" y1="70" x2="165" y2="210" stroke="#1a1a1a" stroke-width="1"/>
+          <!-- Large crane center print -->
+          <g transform="translate(100,148) scale(0.75)">
+            <polygon points="0,-38 30,-16 0,6 -30,-16" fill="#1c1400" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+            <line x1="0" y1="-38" x2="0" y2="6" stroke="#F0D070" stroke-width="0.5" opacity="0.3"/>
+            <polygon points="-30,-16 -60,-30 -44,-12" fill="#110e00" stroke="#C9A84C" stroke-width="1.4" stroke-linejoin="round"/>
+            <polygon points="30,-16 60,-30 44,-10" fill="#110e00" stroke="#C9A84C" stroke-width="1.4" stroke-linejoin="round"/>
+            <polygon points="0,-38 8,-58 -8,-58" fill="#1a1300" stroke="#F0D070" stroke-width="1.3" stroke-linejoin="round"/>
+            <polygon points="8,-58 18,-66 12,-52" fill="#0d0a00" stroke="#C9A84C" stroke-width="1" stroke-linejoin="round"/>
+            <circle cx="9" cy="-64" r="2" fill="#F0D070"/>
+            <polygon points="0,6 -8,24 8,24" fill="#1a1300" stroke="#F0D070" stroke-width="1.2" stroke-linejoin="round"/>
+            <polygon points="-8,24 -16,36 -6,30" fill="#0f0c00" stroke="#C9A84C" stroke-width="1" stroke-linejoin="round"/>
+            <polygon points="8,24 16,36 6,30" fill="#0f0c00" stroke="#C9A84C" stroke-width="1" stroke-linejoin="round"/>
+            <g transform="translate(60,-30)" opacity="0.85">
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="1" transform="rotate(0)"/>
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="1" transform="rotate(72)"/>
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="1" transform="rotate(144)"/>
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="1" transform="rotate(216)"/>
+              <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="1" transform="rotate(288)"/>
+              <circle cx="0" cy="0" r="2.5" fill="#C9A84C"/>
+              <circle cx="0" cy="0" r="1.1" fill="#F0D070"/>
+            </g>
+          </g>
+          <text x="100" y="200" font-family="'Zen Kaku Gothic New',sans-serif" font-size="7" fill="rgba(201,168,76,0.4)" text-anchor="middle" letter-spacing="4">HANAMI TRENDS</text>
+        </svg>
+      </div>
+      <div class="product-tag" style="background:transparent;border:1px solid var(--gold);color:var(--gold);">Collab</div>
+      <div class="product-info">
+        <div class="product-name">Crane Tote Bag</div>
+        <div class="product-price">€ 59</div>
+      </div>
+      <div class="product-overlay">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#f5f0e8;letter-spacing:0.05em;">Crane Tote Bag</div>
+        <button class="btn-add">Add to Cart</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUOTE STRIP -->
+<div class="featured-strip fade-up">
+  <blockquote>"Cherry blossoms fall — and we catch them in thread, in ink, in every stitch."</blockquote>
+  <cite>— Hanami Trends &nbsp;·&nbsp; 花見</cite>
+</div>
+
+<!-- ABOUT -->
+<section id="about" style="padding:120px 48px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div class="about-visual fade-up">
+      <!-- Large decorative logo -->
+      <svg width="340" height="380" viewBox="0 0 340 380">
+        <defs>
+          <linearGradient id="aG1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#F5E090"/>
+            <stop offset="55%" stop-color="#C9A84C"/>
+            <stop offset="100%" stop-color="#6E500E"/>
+          </linearGradient>
+          <linearGradient id="aG2" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F0D070"/>
+            <stop offset="100%" stop-color="#8B6810"/>
+          </linearGradient>
+        </defs>
+        <!-- Very large crane -->
+        <polygon points="170,100 212,130 170,160 128,130" fill="#1c1400" stroke="url(#aG1)" stroke-width="1.5" stroke-linejoin="round"/>
+        <line x1="170" y1="100" x2="170" y2="160" stroke="#F0D070" stroke-width="0.8" opacity="0.25"/>
+        <line x1="128" y1="130" x2="212" y2="130" stroke="#F0D070" stroke-width="0.6" opacity="0.18"/>
+        <polygon points="170,100 212,130 170,130" fill="#2a1e00" stroke="none" opacity="0.4"/>
+        <polygon points="128,130 82,106 102,132" fill="#110e00" stroke="url(#aG1)" stroke-width="1.4" stroke-linejoin="round"/>
+        <polygon points="128,130 76,146 100,158" fill="#0c0900" stroke="#B89030" stroke-width="1.3" stroke-linejoin="round"/>
+        <polygon points="212,130 258,104 238,132" fill="#110e00" stroke="url(#aG1)" stroke-width="1.4" stroke-linejoin="round"/>
+        <polygon points="212,130 262,148 240,160" fill="#0c0900" stroke="#B89030" stroke-width="1.3" stroke-linejoin="round"/>
+        <polygon points="170,100 178,74 162,74" fill="#1a1300" stroke="url(#aG2)" stroke-width="1.3" stroke-linejoin="round"/>
+        <polygon points="162,74 178,74 184,56 172,52" fill="#1f1700" stroke="url(#aG1)" stroke-width="1.3" stroke-linejoin="round"/>
+        <polygon points="184,56 200,48 192,60" fill="#0d0a00" stroke="#C9A84C" stroke-width="1.1" stroke-linejoin="round"/>
+        <circle cx="174" cy="62" r="3" fill="#F0D070"/>
+        <circle cx="174" cy="62" r="1.4" fill="#1c1400"/>
+        <polygon points="170,160 162,184 178,184" fill="#1a1300" stroke="url(#aG2)" stroke-width="1.3" stroke-linejoin="round"/>
+        <polygon points="162,184 148,202 162,196" fill="#0f0c00" stroke="#B89030" stroke-width="1.1" stroke-linejoin="round"/>
+        <polygon points="178,184 192,202 178,196" fill="#0f0c00" stroke="#B89030" stroke-width="1.1" stroke-linejoin="round"/>
+        <!-- Sakura wing tip -->
+        <g transform="translate(262,104)" opacity="0.9">
+          <ellipse cx="0" cy="0" rx="6" ry="10" fill="#1c1400" stroke="#C9A84C" stroke-width="1.1" transform="rotate(0)"/>
+          <ellipse cx="0" cy="0" rx="6" ry="10" fill="#1c1400" stroke="#C9A84C" stroke-width="1.1" transform="rotate(72)"/>
+          <ellipse cx="0" cy="0" rx="6" ry="10" fill="#1c1400" stroke="#C9A84C" stroke-width="1.1" transform="rotate(144)"/>
+          <ellipse cx="0" cy="0" rx="6" ry="10" fill="#1c1400" stroke="#C9A84C" stroke-width="1.1" transform="rotate(216)"/>
+          <ellipse cx="0" cy="0" rx="6" ry="10" fill="#1c1400" stroke="#C9A84C" stroke-width="1.1" transform="rotate(288)"/>
+          <circle cx="0" cy="0" r="3.5" fill="#C9A84C"/>
+          <circle cx="0" cy="0" r="1.6" fill="#F0D070"/>
+        </g>
+        <!-- Floating petals -->
+        <ellipse cx="68" cy="112" rx="3" ry="5" fill="#C9A84C" opacity="0.25" transform="rotate(-28,68,112)"/>
+        <ellipse cx="60" cy="150" rx="2.5" ry="4.5" fill="#C9A84C" opacity="0.18" transform="rotate(22,60,150)"/>
+        <ellipse cx="278" cy="155" rx="2.5" ry="4" fill="#C9A84C" opacity="0.2" transform="rotate(-18,278,155)"/>
+        <!-- Wordmark below -->
+        <text x="170" y="250" font-family="'Cormorant Garamond',serif" font-size="32" font-weight="400" fill="url(#aG1)" text-anchor="middle" letter-spacing="5">HANAMI</text>
+        <line x1="80" y1="262" x2="260" y2="262" stroke="#C9A84C" stroke-width="0.7" opacity="0.3"/>
+        <text x="170" y="280" font-family="'Zen Kaku Gothic New',sans-serif" font-size="11" fill="#C9A84C" text-anchor="middle" letter-spacing="9" opacity="0.6">TRENDS</text>
+        <text x="170" y="306" font-family="'Shippori Mincho',serif" font-size="14" fill="#C9A84C" text-anchor="middle" opacity="0.2" letter-spacing="8">花見</text>
+      </svg>
+      <!-- Decorative corner accents -->
+      <div style="position:absolute;top:16px;left:16px;width:24px;height:24px;border-top:1px solid rgba(201,168,76,0.4);border-left:1px solid rgba(201,168,76,0.4);"></div>
+      <div style="position:absolute;top:16px;right:16px;width:24px;height:24px;border-top:1px solid rgba(201,168,76,0.4);border-right:1px solid rgba(201,168,76,0.4);"></div>
+      <div style="position:absolute;bottom:16px;left:16px;width:24px;height:24px;border-bottom:1px solid rgba(201,168,76,0.4);border-left:1px solid rgba(201,168,76,0.4);"></div>
+      <div style="position:absolute;bottom:16px;right:16px;width:24px;height:24px;border-bottom:1px solid rgba(201,168,76,0.4);border-right:1px solid rgba(201,168,76,0.4);"></div>
+    </div>
+
+    <div class="about-text fade-up" style="transition-delay:0.15s">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">Born from <em>Blossom</em><br/>and Ink</h2>
+      <p class="about-body">
+        Hanami Trends was born from two obsessions — the fleeting beauty of sakura season and the bold, expressive world of anime. We found that both share the same truth: beauty is most powerful when it is transient, intentional, and fearless.
+      </p>
+      <p class="about-body">
+        Every piece we create is a limited chapter. The origami crane — our mark — represents the Japanese tradition of folding one thousand cranes for a wish. Ours is simple: that you wear something that means something.
+      </p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">千</div>
+          <div class="stat-label">Limited per drop</div>
+        </div>
+        <div>
+          <div class="stat-num">12</div>
+          <div class="stat-label">Annual releases</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Organic cotton</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get in Touch</div>
+  <h2 class="section-title">Let's <em>Connect</em></h2>
+
+  <div class="contact-grid">
+    <div class="contact-info fade-up">
+      <div>
+        <div class="contact-detail-label">Studio</div>
+        <div class="contact-detail-val">Tokyo, Japan &amp; Malta, EU</div>
+      </div>
+      <div>
+        <div class="contact-detail-label">Email</div>
+        <div class="contact-detail-val">hello@hanamitrends.com</div>
+      </div>
+      <div>
+        <div class="contact-detail-label">Wholesale &amp; Press</div>
+        <div class="contact-detail-val">trade@hanamitrends.com</div>
+      </div>
+      <div>
+        <div class="contact-detail-label">Follow</div>
+        <div class="social-links" style="margin-top:4px;">
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">Pinterest</a>
+        </div>
+      </div>
+      <!-- Decorative kanji stack -->
+      <div style="margin-top:16px;opacity:0.12;font-family:'Shippori Mincho',serif;font-size:80px;color:var(--gold);line-height:1;letter-spacing:-4px;">花見</div>
+    </div>
+
+    <div class="fade-up" style="transition-delay:0.15s">
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input class="form-input" type="text" placeholder="Your name"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" placeholder="your@email.com"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <input class="form-input" type="text" placeholder="General enquiry, Press, Wholesale..."/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell us what's on your mind..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="align-self:flex-start;cursor:none;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#home" class="nav-logo" style="text-decoration:none;">
+        <svg width="28" height="34" viewBox="0 0 130 150">
+          <defs>
+            <linearGradient id="fG1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#F5E090"/>
+              <stop offset="55%" stop-color="#C9A84C"/>
+              <stop offset="100%" stop-color="#7A5C10"/>
+            </linearGradient>
+            <linearGradient id="fG2" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#F0D070"/>
+              <stop offset="100%" stop-color="#8B6810"/>
+            </linearGradient>
+          </defs>
+          <polygon points="65,58 88,75 65,92 42,75" fill="#1c1400" stroke="url(#fG1)" stroke-width="1.3" stroke-linejoin="round"/>
+          <polygon points="42,75 14,58 28,77" fill="#110e00" stroke="url(#fG1)" stroke-width="1.2" stroke-linejoin="round"/>
+          <polygon points="42,75 10,86 28,95" fill="#0c0900" stroke="#B89030" stroke-width="1.1" stroke-linejoin="round"/>
+          <polygon points="88,75 116,56 102,76" fill="#110e00" stroke="url(#fG1)" stroke-width="1.2" stroke-linejoin="round"/>
+          <polygon points="88,75 120,88 102,97" fill="#0c0900" stroke="#B89030" stroke-width="1.1" stroke-linejoin="round"/>
+          <polygon points="65,58 72,40 58,40" fill="#1a1300" stroke="url(#fG2)" stroke-width="1.2" stroke-linejoin="round"/>
+          <polygon points="58,40 72,40 77,28 68,26" fill="#1f1700" stroke="url(#fG1)" stroke-width="1.1" stroke-linejoin="round"/>
+          <polygon points="77,28 89,22 82,30" fill="#0d0a00" stroke="#C9A84C" stroke-width="0.9" stroke-linejoin="round"/>
+          <circle cx="70" cy="32" r="2" fill="#F0D070"/>
+          <polygon points="65,92 58,112 72,112" fill="#1a1300" stroke="url(#fG2)" stroke-width="1.1" stroke-linejoin="round"/>
+          <polygon points="58,112 46,126 60,120" fill="#0f0c00" stroke="#B89030" stroke-width="0.9" stroke-linejoin="round"/>
+          <polygon points="72,112 84,126 70,120" fill="#0f0c00" stroke="#B89030" stroke-width="0.9" stroke-linejoin="round"/>
+          <g transform="translate(120,56)" opacity="0.9">
+            <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(0)"/>
+            <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(72)"/>
+            <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(144)"/>
+            <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(216)"/>
+            <ellipse cx="0" cy="0" rx="4" ry="7" fill="#1c1400" stroke="#C9A84C" stroke-width="0.9" transform="rotate(288)"/>
+            <circle cx="0" cy="0" r="2.5" fill="#C9A84C"/>
+            <circle cx="0" cy="0" r="1.1" fill="#F0D070"/>
+          </g>
+        </svg>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:#C9A84C;letter-spacing:0.1em;">HANAMI</div>
+          <div style="font-size:8px;letter-spacing:0.35em;color:rgba(201,168,76,0.45);text-transform:uppercase;">TRENDS</div>
+        </div>
+      </a>
+      <p class="footer-desc">Anime-inspired luxury streetwear. Each piece is a limited drop — designed to mean something, built to last.</p>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">Shop</div>
+        <a href="#">New Arrivals</a>
+        <a href="#">Hoodies</a>
+        <a href="#">Tees</a>
+        <a href="#">Outerwear</a>
+        <a href="#">Accessories</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Brand</div>
+        <a href="#">Our Story</a>
+        <a href="#">The Crane</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Help</div>
+        <a href="#">Shipping</a>
+        <a href="#">Returns</a>
+        <a href="#">Sizing Guide</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Hanami Trends. All rights reserved.</div>
+    <div class="footer-kanji">花見</div>
+    <div class="footer-copy">Made with intention · Limited always</div>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+  function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
+  animRing();
+  document.querySelectorAll('a,button,.product-card,.nav-cta').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; ring.style.transform = 'translate(-50%,-50%) scale(1.5)'; ring.style.borderColor = 'rgba(201,168,76,0.8)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.borderColor = 'rgba(201,168,76,0.5)'; });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
+
+  // BG lines
+  const bgLines = document.getElementById('bgLines');
+  for (let i = 0; i < 8; i++) {
+    const line = document.createElement('div');
+    line.className = 'bg-line';
+    line.style.cssText = `left:${10 + i * 12}%;top:0;height:100%;animation-delay:${i * 0.7}s;animation-duration:${5 + i * 0.5}s;`;
+    bgLines.appendChild(line);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
